@@ -1,0 +1,26 @@
+{
+    "name": "google-mcp",
+    "version": "1.0.0",
+    "scripts": {
+        "start": "npm run dev",
+        "dev": "tsx src/index.ts",
+        "auth": "node auth.js",
+        "build": "tsc && chmod 755 build/index.js"
+    },
+    "files": [
+        "build"
+    ],
+    "type": "module",
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.27.1",
+        "dotenv": "^17.3.1",
+        "googleapis": "^171.4.0",
+        "html-to-text": "^9.0.5"
+    },
+    "devDependencies": {
+        "@types/html-to-text": "^9.0.4",
+        "@types/node": "^25.5.0",
+        "tsx": "^4.21.0",
+        "typescript": "^5.9.3"
+    }
+}
