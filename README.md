@@ -8,32 +8,15 @@ Minimal Model Context Protocol server for Google services. Runs over `stdio` and
 - A Google Cloud project with Gmail API, Google Calendar API, and YouTube Data API v3 enabled
 - OAuth 2.0 client credentials (Desktop app type)
 
-## Installation
-
-```bash
-npm install
-```
-
-## Environment Variables
-
-Create a `.env` file in the project root:
-
-```env
-GOOGLE_CLIENT_ID=your_google_client_id
-GOOGLE_CLIENT_SECRET=your_google_client_secret
-GOOGLE_REDIRECT_URI=your_google_redirect_uri
-GOOGLE_REFRESH_TOKEN=your_google_refresh_token
-```
-
 ## OAuth Setup
 
-Run the auth helper to generate a refresh token:
+Run the auth command to generate a refresh token. Pass your OAuth client credentials as flags:
 
 ```bash
-npm run auth
+npx google-mcp auth --client-id=<your_client_id> --client-secret=<your_client_secret>
 ```
 
-Open the printed URL, grant access, paste the code back into the terminal, and copy the resulting `GOOGLE_REFRESH_TOKEN` into `.env`.
+Open the printed URL, grant access, paste the code back into the terminal, and copy the resulting `GOOGLE_REFRESH_TOKEN` into your MCP client config.
 
 Scopes requested:
 
@@ -41,39 +24,40 @@ Scopes requested:
 - `calendar.events`
 - `youtube.readonly`
 
-## Available Scripts
-
-- `npm run dev` — run the server from TypeScript with `tsx`
-- `npm run auth` — generate an OAuth refresh token
-- `npm run build` — compile TypeScript into `build/`
-
-## Running the Server
-
-```bash
-# Development
-npm run dev
-
-# Production
-npm run build
-node build/index.js
-```
-
 ## MCP Client Config
 
 ```json
 {
-  "command": "node",
-  "args": ["/absolute/path/to/google-mcp/build/index.js"],
+  "command": "npx",
+  "args": ["-y", "google-mcp"],
   "env": {
     "GOOGLE_CLIENT_ID": "...",
     "GOOGLE_CLIENT_SECRET": "...",
-    "GOOGLE_REDIRECT_URI": "...",
     "GOOGLE_REFRESH_TOKEN": "..."
   }
 }
 ```
 
-For development, replace `node build/index.js` with `npx tsx src/index.ts`.
+## Local Development
+
+Clone the repo and install dependencies:
+
+```bash
+npm install
+```
+
+Create a `.env` file (see `.env.example`) with your credentials, then:
+
+```bash
+# Run the MCP server
+npm run dev
+
+# Run the auth flow
+npm run auth -- --client-id=<id> --client-secret=<secret>
+
+# Compile
+npm run build
+```
 
 ## Exposed MCP Tools
 
@@ -106,13 +90,13 @@ Supported mailbox types: `INBOX`, `UNREAD`, `SENT`, `PROMOTIONS`, `SOCIAL`, `UPD
 
 ```text
 src/
-  index.ts                        MCP server bootstrap
+  index.ts                        MCP server entry point + CLI dispatcher
+  auth.ts                         OAuth auth subcommand
   registry/                       Tool registration
   shared/auth.ts                  OAuth client factory
   services/
     gmail/                        Gmail queries, actions, MCP tools
     calendar/                     Calendar queries, actions, MCP tools
     youtube/                      YouTube search, MCP tools
-auth.js                           OAuth helper script
 build/                            Compiled output
 ```

@@ -1,5 +1,5 @@
 import { google, gmail_v1 } from 'googleapis';
-import { createOAuthClient } from '../../../../shared/auth.js';
+import { createOAuthClient } from '../../../shared/auth.js';
 
 export function getGmailClient(): gmail_v1.Gmail {
     const auth = createOAuthClient();

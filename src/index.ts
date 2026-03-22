@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import 'dotenv/config';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
@@ -6,24 +7,29 @@ import { gmailTools } from './services/gmail/index.js';
 import { calendarTools } from './services/calendar/index.js';
 import { youtubeTools } from './services/youtube/index.js';
 
-const server = new McpServer({
-    name: 'google-mcp',
-    version: '1.0.0',
-});
+if (process.argv[2] === 'auth') {
+    const { runAuth } = await import('./auth.js');
+    await runAuth();
+} else {
+    const server = new McpServer({
+        name: 'google-mcp',
+        version: '1.0.0',
+    });
 
-const registry = new ToolRegistry(server);
+    const registry = new ToolRegistry(server);
 
-registry.registerTools(gmailTools);     // Register Gmail tools
-registry.registerTools(calendarTools);  // Register Calendar tools
-registry.registerTools(youtubeTools);   // Register YouTube tools
+    registry.registerTools(gmailTools);
+    registry.registerTools(calendarTools);
+    registry.registerTools(youtubeTools);
 
-async function main() {
-    const transport = new StdioServerTransport();
-    await server.connect(transport);
-    console.error("Google MCP Server running on stdio");
+    async function main() {
+        const transport = new StdioServerTransport();
+        await server.connect(transport);
+        console.error('Google MCP Server running on stdio');
+    }
+
+    main().catch((error) => {
+        console.error('Fatal error in main():', error);
+        process.exit(1);
+    });
 }
-
-main().catch((error) => {
-    console.error("Fatal error in main():", error);
-    process.exit(1);
-});

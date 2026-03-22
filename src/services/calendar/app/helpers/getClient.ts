@@ -1,5 +1,5 @@
 import { google, calendar_v3 } from 'googleapis';
-import { createOAuthClient } from '../../../../shared/auth.js';
+import { createOAuthClient } from '../../../shared/auth.js';
 
 export function getCalendarClient(): calendar_v3.Calendar {
     const auth = createOAuthClient();

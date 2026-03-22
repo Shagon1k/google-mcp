@@ -1,10 +1,12 @@
 {
     "name": "google-mcp",
     "version": "1.0.0",
+    "bin": {
+        "google-mcp": "./build/index.js"
+    },
     "scripts": {
-        "start": "npm run dev",
         "dev": "tsx src/index.ts",
-        "auth": "node auth.js",
+        "auth": "tsx src/index.ts auth",
         "build": "tsc && chmod 755 build/index.js"
     },
     "files": [
