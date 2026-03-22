@@ -1,7 +1,7 @@
 import { gmail_v1 } from 'googleapis';
 import type { IEmailMailbox, IEmail, IEmailSummary } from '../types.js';
 import { GMAIL_USER_ID, EMAIL_CONFIG_BY_MAILBOX } from '../config.js';
-import { getClient } from '../../../shared/getClient.js';
+import { getGmailClient } from './helpers/getClient.js';
 import { normalizeEmail, normalizeEmailSummary } from './helpers/normalizers.js';
 
 async function getMessageIds(
@@ -43,7 +43,7 @@ async function getMessageSummaryById(gmail: gmail_v1.Gmail, id: string): Promise
 }
 
 export async function getEmails(mailbox: IEmailMailbox, maxCount: number = 10): Promise<IEmail[]> {
-    const gmail = getClient();
+    const gmail = getGmailClient();
     const messageIds = await getMessageIds(gmail, mailbox, maxCount);
 
     if (messageIds.length === 0) return [];
@@ -60,7 +60,7 @@ export async function getEmailSummaries(
     mailbox: IEmailMailbox,
     maxCount: number = 10
 ): Promise<IEmailSummary[]> {
-    const gmail = getClient();
+    const gmail = getGmailClient();
     const messageIds = await getMessageIds(gmail, mailbox, maxCount);
 
     if (messageIds.length === 0) return [];

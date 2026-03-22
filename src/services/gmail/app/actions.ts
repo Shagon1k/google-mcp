@@ -1,7 +1,7 @@
 import { gmail_v1 } from 'googleapis';
 import type { IEmailBatchActionResult } from '../types.js';
 import { GMAIL_USER_ID } from '../config.js';
-import { getClient } from '../../../shared/getClient.js';
+import { getGmailClient } from './helpers/getClient.js';
 
 async function markEmailAsRead(gmail: gmail_v1.Gmail, id: string): Promise<void> {
     await gmail.users.messages.modify({
@@ -34,7 +34,7 @@ async function runEmailBatchAction(
     emailIds: string[],
     action: (gmail: gmail_v1.Gmail, id: string) => Promise<void>
 ): Promise<IEmailBatchActionResult> {
-    const gmail = getClient();
+    const gmail = getGmailClient();
     const uniqueIds = Array.from(new Set(emailIds.filter(Boolean)));
 
     if (uniqueIds.length === 0) {

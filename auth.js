@@ -12,10 +12,9 @@ const oauth2Client = new google.auth.OAuth2(
 const url = oauth2Client.generateAuthUrl({
   access_type: 'offline',
   scope: [
-    'https://www.googleapis.com/auth/gmail.readonly',  // existing
-    'https://www.googleapis.com/auth/gmail.modify',    // mark read/unread, archive, label
-    // OR just use the full access scope which covers everything:
-    // 'https://www.googleapis.com/auth/gmail'
+    'https://www.googleapis.com/auth/gmail.readonly',
+    'https://www.googleapis.com/auth/gmail.modify',
+    'https://www.googleapis.com/auth/calendar.events',
   ],
   prompt: 'consent',  // forces Google to reissue refresh token with new scopes
 });

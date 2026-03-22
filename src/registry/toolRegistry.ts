@@ -11,7 +11,7 @@ interface ToolDefinition<TInput = any, TOutput = any> {
 }
 
 export class ToolRegistry {
-    constructor(private server: McpServer) {}
+    constructor(private server: McpServer) { }
 
     registerTool<TInput = any, TOutput = any>(
         definition: ToolDefinition<TInput, TOutput>
