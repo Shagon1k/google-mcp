@@ -4,6 +4,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { ToolRegistry } from './registry/toolRegistry.js';
 import { gmailTools } from './services/gmail/index.js';
 import { calendarTools } from './services/calendar/index.js';
+import { youtubeTools } from './services/youtube/index.js';
 
 const server = new McpServer({
     name: 'google-mcp',
@@ -12,19 +13,14 @@ const server = new McpServer({
 
 const registry = new ToolRegistry(server);
 
-// Register Gmail tools
-registry.registerTools(gmailTools);
-
-// Register Calendar tools
-registry.registerTools(calendarTools);
-
-// Future: Add more services here
-// registry.registerTools(driveTools);
+registry.registerTools(gmailTools);     // Register Gmail tools
+registry.registerTools(calendarTools);  // Register Calendar tools
+registry.registerTools(youtubeTools);   // Register YouTube tools
 
 async function main() {
     const transport = new StdioServerTransport();
     await server.connect(transport);
-    console.error("Gmail MCP Server running on stdio");
+    console.error("Google MCP Server running on stdio");
 }
 
 main().catch((error) => {

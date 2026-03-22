@@ -15,6 +15,7 @@ const url = oauth2Client.generateAuthUrl({
     'https://www.googleapis.com/auth/gmail.readonly',
     'https://www.googleapis.com/auth/gmail.modify',
     'https://www.googleapis.com/auth/calendar.events',
+    'https://www.googleapis.com/auth/youtube.readonly',
   ],
   prompt: 'consent',  // forces Google to reissue refresh token with new scopes
 });
