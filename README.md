@@ -33,10 +33,14 @@ Scopes requested:
   "env": {
     "GOOGLE_CLIENT_ID": "...",
     "GOOGLE_CLIENT_SECRET": "...",
-    "GOOGLE_REFRESH_TOKEN": "..."
+    "GOOGLE_REFRESH_TOKEN": "...",
+    "GOOGLE_PRIMARY_CALENDAR_ID": "primary",
+    "GOOGLE_CALENDAR_IDS": "primary,<custom-calendar-id@group.calendar.google.com>"
   }
 }
 ```
+
+`GOOGLE_PRIMARY_CALENDAR_ID` sets the calendar used for creating events. `GOOGLE_CALENDAR_IDS` is a comma-separated list of calendar IDs to query when fetching events. To find a custom calendar's ID, go to Google Calendar → Settings → select the calendar → "Integrate calendar".
 
 ## Local Development
 
@@ -59,6 +63,10 @@ npm run auth -- --client-id=<id> --client-secret=<secret>
 npm run build
 ```
 
+### Debugging
+
+Make sure `.env` is populated from `.env.example` first — the debug config reads env vars from there at startup.
+
 ## Exposed MCP Tools
 
 ### Gmail
@@ -77,7 +85,7 @@ Supported mailbox types: `INBOX`, `UNREAD`, `SENT`, `PROMOTIONS`, `SOCIAL`, `UPD
 
 | Tool | Description |
 |---|---|
-| `get_calendar_events` | Fetch events in a time range. Inputs: `fromDate`, `toDate` (ISO 8601) |
+| `get_calendar_events` | Fetch events across all configured calendars in a time range. Inputs: `fromDate`, `toDate` (ISO 8601) |
 | `create_calendar_event` | Create a new event. Inputs: `summary`, `start`, `end`, optional `description`, `location`, `attendees` |
 
 ### YouTube

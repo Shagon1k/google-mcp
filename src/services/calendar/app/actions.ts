@@ -1,5 +1,5 @@
 import type { ICalendarEvent, ICreateCalendarEventParams } from '../types.js';
-import { CALENDAR_ID } from '../config.js';
+import { PRIMARY_CALENDAR_ID } from '../config.js';
 import { getCalendarClient } from './helpers/getClient.js';
 import { normalizeCalendarEvent } from './helpers/normalizers.js';
 
@@ -7,7 +7,7 @@ export async function createCalendarEvent(params: ICreateCalendarEventParams): P
     const calendar = getCalendarClient();
 
     const response = await calendar.events.insert({
-        calendarId: CALENDAR_ID,
+        calendarId: PRIMARY_CALENDAR_ID,
         requestBody: {
             summary: params.summary,
             description: params.description,
