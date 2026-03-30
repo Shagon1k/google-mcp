@@ -94,17 +94,29 @@ Supported mailbox types: `INBOX`, `UNREAD`, `SENT`, `PROMOTIONS`, `SOCIAL`, `UPD
 |---|---|
 | `search_youtube_videos` | Search videos by query. Inputs: `query`, `maxResults` (1–50, default 10), `videoDuration` (`any` / `short` <4 min / `medium` 4–20 min / `long` >20 min, default `any`) |
 
+## Exposed MCP Prompts
+
+Prompts are reusable workflow templates that can be invoked by MCP clients.
+
+| Prompt | Description |
+|---|---|
+| `daily-briefing` | Daily briefing that checks unread emails and today's calendar events, then offers to mark emails as read |
+| `youtube-research` | Interactive research assistant that searches YouTube for videos on a topic and presents curated results |
+
 ## Project Structure
 
 ```text
 src/
   index.ts                        MCP server entry point + CLI dispatcher
   auth.ts                         OAuth auth subcommand
-  registry/                       Tool registration
-  shared/auth.ts                  OAuth client factory
+  registry/
+    toolRegistry.ts               Tool registration logic
+    promptRegistry.ts             Prompt registration logic
+  prompts/                        MCP prompt definitions
   services/
     gmail/                        Gmail queries, actions, MCP tools
     calendar/                     Calendar queries, actions, MCP tools
     youtube/                      YouTube search, MCP tools
+    shared/auth.ts                OAuth client factory
 build/                            Compiled output
 ```

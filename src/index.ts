@@ -3,9 +3,11 @@ import 'dotenv/config';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { ToolRegistry } from './registry/toolRegistry.js';
+import { PromptRegistry } from './registry/promptRegistry.js';
 import { gmailTools } from './services/gmail/index.js';
 import { calendarTools } from './services/calendar/index.js';
 import { youtubeTools } from './services/youtube/index.js';
+import { allPrompts } from './prompts/index.js';
 
 if (process.argv[2] === 'auth') {
     const { runAuth } = await import('./auth.js');
@@ -16,11 +18,14 @@ if (process.argv[2] === 'auth') {
         version: '1.0.0',
     });
 
-    const registry = new ToolRegistry(server);
+    const toolRegistry = new ToolRegistry(server);
+    const promptRegistry = new PromptRegistry(server);
 
-    registry.registerTools(gmailTools);
-    registry.registerTools(calendarTools);
-    registry.registerTools(youtubeTools);
+    toolRegistry.registerTools(gmailTools);
+    toolRegistry.registerTools(calendarTools);
+    toolRegistry.registerTools(youtubeTools);
+
+    promptRegistry.registerPrompts(allPrompts);
 
     async function main() {
         const transport = new StdioServerTransport();
