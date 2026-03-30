@@ -61,6 +61,9 @@ npm run auth -- --client-id=<id> --client-secret=<secret>
 
 # Compile
 npm run build
+
+# Launch MCP Inspector
+npm run inspect
 ```
 
 ### Debugging
