@@ -10,13 +10,19 @@ Minimal Model Context Protocol server for Google services. Runs over `stdio` and
 
 ## OAuth Setup
 
-Run the auth command to generate a refresh token. Pass your OAuth client credentials as flags:
+Run the auth command to generate a refresh token. If `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` are already in your `.env`, no flags are needed:
+
+```bash
+npx google-mcp auth
+```
+
+Otherwise pass them explicitly:
 
 ```bash
 npx google-mcp auth --client-id=<your_client_id> --client-secret=<your_client_secret>
 ```
 
-Open the printed URL, grant access, paste the code back into the terminal, and copy the resulting `GOOGLE_REFRESH_TOKEN` into your MCP client config.
+A browser tab will open for you to grant access. After approval, Google redirects back to localhost automatically — no code pasting required. Copy the resulting `GOOGLE_REFRESH_TOKEN` into your MCP client config.
 
 Scopes requested:
 
@@ -56,8 +62,8 @@ Create a `.env` file (see `.env.example`) with your credentials, then:
 # Run the MCP server
 npm run dev
 
-# Run the auth flow
-npm run auth -- --client-id=<id> --client-secret=<secret>
+# Run the auth flow (reads GOOGLE_CLIENT_ID/SECRET from .env if set)
+npm run auth
 
 # Compile
 npm run build
